@@ -24,15 +24,15 @@ RUN gem install oxidized-web --no-ri --no-rdoc
 RUN gem install aws-sdk
 RUN gem install slack-api
 RUN gem install xmpp4r
+RUN cp /tmp/oxidized/extra/oxidized.runit /etc/service/oxidized/run &&\
+cp /tmp/oxidized/extra/auto-reload-config.runit /etc/service/auto-reload-config/run &&\
+cp /tmp/oxidized/extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
 RUN rm -rf /tmp/oxidized
 
 RUN apt-get remove -y ruby-dev pkg-config make cmake
 
 RUN apt-get -y autoremove
-RUN cp /tmp/oxidized/extra/oxidized.runit /etc/service/oxidized/run &&\
-cp /tmp/oxidized/extra/auto-reload-config.runit /etc/service/auto-reload-config/run &&\
-cp /tmp/oxidized/extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
 VOLUME ["/root/.config/oxidized"]
 EXPOSE 8888/tcp
