@@ -8,7 +8,8 @@ RUN add-apt-repository ppa:brightbox/ruby-ng && \
   apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++
 RUN git clone https://github.com/ytti/oxidized.git /tmp/ &&\
     cd /tmp/ &&\
-    git submodule update --init --recursive
+    git submodule update --init --recursive &&\
+    ls /tmp/oxidized
     
 WORKDIR /tmp/oxidized
 
