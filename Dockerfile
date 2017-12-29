@@ -9,7 +9,7 @@ RUN add-apt-repository ppa:brightbox/ruby-ng && \
 RUN git clone https://github.com/ytti/oxidized.git ${WEB_REPO} &&\
     cd ${WEB_REPO} &&\
     git checkout ${PHPIPAM_VERSION} &&\
-    git submodule update --init --recursive &&\
+    git submodule update --init --recursive
 RUN mkdir -p /tmp/oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
