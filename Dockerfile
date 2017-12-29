@@ -5,12 +5,11 @@ MAINTAINER Samer Abdel-Hafez <sam@arahant.net>
 
 RUN add-apt-repository ppa:brightbox/ruby-ng && \
 	apt-get update && \
-  apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++
+  apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++ nginx apache2-utils
 RUN mkdir /tmp/oxidized &&\
     git clone https://github.com/ytti/oxidized.git /tmp/oxidized &&\
     cd /tmp/oxidized &&\
-    git submodule update --init --recursive &&\
-    ls /tmp/
+    git submodule update --init --recursive 
     
 WORKDIR /tmp/oxidized
 
@@ -21,11 +20,10 @@ RUN gem install oxidized-*.gem
 RUN gem install oxidized-web --no-ri --no-rdoc
 
 # dependencies for hooks
-RUN gem install aws-sdk
-RUN gem install slack-api
-RUN gem install xmpp4r
-RUN ls /etc/service 
-RUN mkdir /etc/service/oxidized &&\
+RUN gem install aws-sdk &&\
+RUN gem install slack-api &&\
+RUN gem install xmpp4r &&\
+ mkdir /etc/service/oxidized &&\
 mkdir /etc/service/auto-reload-config &&\
 mkdir /etc/service/update-ca-certificates &&\
 cp /tmp/oxidized/extra/oxidized.runit /etc/service/oxidized/run &&\
