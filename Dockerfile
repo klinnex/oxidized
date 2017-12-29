@@ -6,15 +6,16 @@ MAINTAINER Samer Abdel-Hafez <sam@arahant.net>
 RUN add-apt-repository ppa:brightbox/ruby-ng && \
 	apt-get update && \
   apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++
-RUN git clone https://github.com/ytti/oxidized.git /tmp/ &&\
-    cd /tmp/ &&\
+RUN mkdir /tmp/oxidized &&\
+    git clone https://github.com/ytti/oxidized.git /tmp/oxidized &&\
+    cd /tmp/oxidized &&\
     git submodule update --init --recursive &&\
     ls /tmp/
     
 WORKDIR /tmp/oxidized
 
 RUN gem build oxidized.gemspec
-RUN gem install ${WEB_REPO}\oxidized-*.gem
+RUN gem install oxidized-*.gem
 
 # web interface
 RUN gem install oxidized-web --no-ri --no-rdoc
