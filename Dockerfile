@@ -1,16 +1,21 @@
 FROM phusion/baseimage:0.9.18
 MAINTAINER Samer Abdel-Hafez <sam@arahant.net>
+ENV WEB_REPO /var/www/html
+
 
 RUN add-apt-repository ppa:brightbox/ruby-ng && \
 	apt-get update && \
   apt-get install -y ruby2.3 ruby2.3-dev libsqlite3-dev libssl-dev pkg-config make cmake libssh2-1-dev git g++
-
+RUN git clone https://github.com/ytti/oxidized.git ${WEB_REPO} &&\
+    cd ${WEB_REPO} &&\
+    git checkout ${PHPIPAM_VERSION} &&\
+    git submodule update --init --recursive &&\
 RUN mkdir -p /tmp/oxidized
 COPY . /tmp/oxidized/
 WORKDIR /tmp/oxidized
 
-RUN gem build oxidized.gemspec
-RUN gem install oxidized-*.gem
+RUN gem build ${WEB_REPO}\oxidized.gemspec
+RUN gem install ${WEB_REPO}\oxidized-*.gem
 
 # web interface
 RUN gem install oxidized-web --no-ri --no-rdoc
