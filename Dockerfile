@@ -29,11 +29,10 @@ RUN rm -rf /tmp/oxidized
 
 RUN apt-get remove -y ruby-dev pkg-config make cmake
 
-RUN apt-get -y autoremove
-
-ADD extra/oxidized.runit /etc/service/oxidized/run
-ADD extra/auto-reload-config.runit /etc/service/auto-reload-config/run
-ADD extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
+RUN apt-get -y autoremove &&\
+cp /tmp/oxidized/extra/oxidized.runit /etc/service/oxidized/run &&\
+cp /tmp/oxidized/extra/auto-reload-config.runit /etc/service/auto-reload-config/run &&\
+cp /tmp/oxidized/extra/update-ca-certificates.runit /etc/service/update-ca-certificates/run
 
 VOLUME ["/root/.config/oxidized"]
 EXPOSE 8888/tcp
